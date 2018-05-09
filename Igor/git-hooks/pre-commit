@@ -1,0 +1,15 @@
+#!/bin/sh
+SRC_JS="src/js"
+
+# On verifie que le repertoire js est staged
+if [ git diff --cached --name-only | grep --quiet ${SRC_JS} ]; then
+    echo "Execute Grunt"
+
+    grunt pre-commit
+
+    EXIT_CODE=$?
+    # Si des erreurs sont remontés, on annule le commit
+    if [[ ${EXIT_CODE} -ne 0 ]]; then
+        exit 1
+    fi
+fi

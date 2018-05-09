@@ -1,0 +1,15 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "jquery": true
+    },
+    "rules": {
+        "comma-spacing": [2, {"before": false, "after": true}],
+        "no-multi-spaces": 2,
+        "indent": [2, 4],
+        "quotes": [2, "single", { "avoidEscape": true }],
+        "yoda": 2
+    }
+}
