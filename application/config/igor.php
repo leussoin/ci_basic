@@ -24,7 +24,7 @@ $config['global'] = 'general';
  * TRUE: utilise les assets minifie 
  * FALSE: utilise les fichiers source
  */
-$config['minify'] = TRUE;
+$config['minify'] = FALSE;
 
 // ---- EXTRA ASSETS ---- //
 

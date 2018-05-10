@@ -151,7 +151,7 @@ class Template {
 
 		return array_map(function($x) {
 			return base_url($x);
-		},$arr);
+		}, $arr);
 	}
 
 	function set($name, $value)
@@ -184,7 +184,6 @@ class Template {
 				$this->data = $data;
 			}
 		}
-		var_dump($this);
 	}
 
 	function load($view = '', $data = NULL, $return = FALSE)
