@@ -142,7 +142,8 @@ class Template {
 			$data = array($data);
 		}
 
-		$data_path = array_map(function($x) {
+		$data_path = array_map(function($x) use($assetsPath)
+		{
 			$file = $assetsPath . $x . '.css';
 			return $file;
 		}, $data);
@@ -184,7 +185,6 @@ class Template {
 				$this->data = $data;
 			}
 		}
-		var_dump($this);
 	}
 
 	function load($view = '', $data = NULL, $return = FALSE)

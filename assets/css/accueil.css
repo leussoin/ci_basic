@@ -1,0 +1,15 @@
+#tableau_produit {
+    width: 100%;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+tr:hover {
+    background-color: lightcyan;
+  }
+
+  .supprimer_produit {
+    text-align:center;
+  }

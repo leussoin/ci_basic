@@ -1,31 +1,39 @@
-<div class="container">
-	<div class="row justify-content-md-center">
-		<div class="col-9">
-			<ul class="list-group">
-				<li class="list-group-item">
-					<b>CodeIgniter 3.1.8 +</b>
-					<ul class="list-group">
-						<li class="list-group-item"> Simple Template Engine </li>
-						<li class="list-group-item"> Assets Configuration </li>
-						<li class="list-group-item"> .ENV Integration </li>
-					</ul>
-				</li>
-				<li class="list-group-item">
-					<b>ESLINT</b>
-					<ul class="list-group">
-						<li class="list-group-item"> GRUNT task</li>
-						<li class="list-group-item"> pre-commit git hooks</li>
-						<li class="list-group-item"> * IDE support * </li>
-					</ul>
-				</li>
-				<li class="list-group-item">
-					<b>pre-installe</b>
-					<ul class="list-group">
-						<li class="list-group-item">Jquery 3.3.1</li>
-						<li class="list-group-item">Bootstrap 4.1.0</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
+<h1>
+    Page listing de produits
+</h1>
+
+<a href="https://www.w3schools.com">Visit W3Schools</a>
+
+<table id="tableau_produit">
+    <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Famille</th> 
+            <th>Quantité</th>
+            <th>Mesure</th>
+            <th>Calorie</th>
+            <th>Prix Intermarché</th>
+            <th>Prix LIDL</th>
+            <th>Supprimer</th>
+
+        </tr>
+    </thead>
+    
+    <?php foreach ($data as $produit) : ?>
+        <tr class="pointer">
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->nom_prod ?></td>
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->nom_categorie ?></td>
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->qte_prod ?></td>
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->nom_mesure ?></td>
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->calories ?></td>
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php if ($produit->fk_id_magasin == 1) { echo $produit->prix; } ?></td> 
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php if ($produit->fk_id_magasin == 2) { echo $produit->prix; } ?></td>
+            <td><i data-id="<?php echo $produit->id_prod ?>" data-nom="<?php echo $produit->nom_prod ?>" class="fa fa-trash-o supprimer_produit"></i></td>
+
+        </tr>
+    <?php endforeach ?>
+
+</table>
+
+
+
