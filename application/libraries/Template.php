@@ -1,19 +1,27 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Template {
-	var $data = array();
-	var $instance ;
+	protected $_data = array();
+
+	public function __construct()
+	{
+		$this->data = array();
+		$this->js = array();
+		$this->css = array();
+		$this->extra = array();
+		$this->debug = FALSE;
+	}
 
 	/**
 	 * ecrit le chemin vers les fichiers js
 	 * prend en compte la configuration minify
-	 * @param data Array, les js defini dans le controlleur
-	 * @param extraData Array, les extra defini dans le controlleur
 	 * @param debug Bool, determine si on est en mode profiler
 	 * @return data_path Array, les js avec leur chemin d'acces
 	 */
-	function set_js( $data = array(), $extraData = array(), $debug = FALSE )
+	function set_js( $debug = FALSE )
 	{
+		$data = $this->js;
+
 		// EXTRA
 		$extra = array();
 		if( $this->CI->config->item('extra_js') ) {
@@ -33,17 +41,17 @@ class Template {
 			}
 		}
 
-		// ExtraData
-		if(! empty($extraData) ) {
-			if(! is_array($extraData) ) {
-				$extraData = array($extraData);
+		// Extra envoyé par le controlleur
+		if(isset($this->extra,$this->extra['js']) && !empty($this->extra['js']) ) {
+			if(! is_array($this->extra) ) {
+				$this->extra = array($this->extra);
 			}
 			
 			$extra = array_merge(
 				$extra,
 				array_map(function($x) {
 					return $this->CI->config->item('extra_path') . 'js/' . $x;
-				}, $extraData)
+				}, $this->extra)
 			);
 		}
 		// JS
@@ -79,18 +87,16 @@ class Template {
 
 		return array_map(function($x) {
 			return base_url($x);
-		},$arr);
+		}, $arr);
 	}
 
 	/**
 	 * ecrit le chemin vers les fichiers css
-	 * @param data Array, les css defini dans le controlleur
-	 * @param extraData Array, les extra defini dans le controlleur
-	 * @param debug bool, determine si on est en mode profiler
 	 * @return data_path Array, les css avec leur chemin d'acces
 	 */
-	function set_css( $data = array(), $extraData = array(), $debug = FALSE )
+	function set_css()
 	{
+		$data = $this->css;
 		$assetsPath = $this->CI->config->item('assets_path') . 'css/';
 
 		// EXTRA
@@ -112,16 +118,16 @@ class Template {
 			}
 		}
 
-		// ExtraData
-		if(! empty($extraData) ) {
-			if(! is_array($extraData) ) {
-				$extraData = array($extraData);
+		// EXTRA CSS envoyés par le controlleur
+		if(isset($this->extra['css']) && ! empty($this->extra['js']) ) {
+			if(! is_array($this->extra) ) {
+				$this->extra = array($this->extra);
 			}
 			$extra = array_merge(
 				$extra, 
 				array_map(function($file) {
 					return $this->CI->config->item('extra_path') . 'css/' . $file;
-				}, $extraData)
+				}, $this->extra)
 			);
 		}
 
@@ -143,10 +149,6 @@ class Template {
 
 		$arr = array_merge($extra, $data_path);
 
-		if($debug) {
-			$arr[] = 'Igor/profiler.css';
-		}
-
 		return array_map(function($x) {
 			return base_url($x);
 		},$arr);
@@ -154,11 +156,41 @@ class Template {
 
 	function set($name, $value)
 	{
-		$this->data[$name] = $value;
+		$this->_data[$name] = $value;
 	}
-	
-	function load($view = '' , $data = array(), $return = FALSE)
+
+	/**
+	 * @param data tableau ou variable
+	 * @return void
+	 */
+	function init($data)
 	{
+		if($data != NULL) {
+			// si c'est un tableau  on parcoure les differents champs pour renconstruire les objets
+			if(is_array($data) ) {
+				foreach($data as $key => $value) {
+					// si la variable existe dans le constructeur
+					if( isset($this->{$key}) ) {
+						if(! is_array($this->{$key}) ) {
+							$this->{$key} = $value;
+						} else {
+							array_push($this->{$key}, $value);
+						}
+					} else {
+						$this->data{$key} = $value;
+					}
+				}
+			} else {
+				$this->data = $data;
+			}
+		}
+		var_dump($this);
+	}
+
+	function load($view = '', $data = NULL, $return = FALSE)
+	{
+		$this->init($data);
+
 		$this->CI =& get_instance();
 		$this->CI->load->helpers('url');
 		$this->CI->benchmark->mark('template_start');
@@ -167,39 +199,29 @@ class Template {
 		$template = 'layouts/template';
 		$header = 'layouts/header';
 		$footer = 'layouts/footer';
-		$debug = ( (isset($data['debug']) && $data['debug'] == TRUE) OR ENVIRONMENT === 'testing' ) ? TRUE : FALSE;
+		$debug = ( $this->debug || ENVIRONMENT === 'testing' ) ? TRUE : FALSE;
 		
 		// PROFILER
 		$this->set('_DEBUG', $debug);
 
 		// ASSETS
-		$this->set('_JS', $this->set_js(
-				isset($data['js']) ? $data['js'] : array(),
-				isset($data['extra'], $data['extra']['js']) ? $data['extra']['js'] : array(),
-				$debug
-			)
-		);
+		$this->set('_JS', $this->set_js($debug));
 
-		$this->set('_CSS', $this->set_css(
-				isset($data['css']) ? $data['css'] : array(),
-				isset($data['extra'], $data['extra']['css']) ? $data['extra']['css'] : array(),
-				$debug
-			)
-		);
+		$this->set('_CSS', $this->set_css() );
 
 		// --- VIEW
 		// HEADER
-		$this->set('_HEADER', $this->CI->load->view($header, $data, TRUE));
+		$this->set('_HEADER', $this->CI->load->view($header, $this->data, TRUE));
 
 		// CONTENT 
-		$this->set('_MAIN', $this->CI->load->view($view, $data, TRUE));
+		$this->set('_MAIN', $this->CI->load->view($view, array('data' => $this->data), TRUE));
 
 		// FOOTER
-		$this->set('_FOOTER', $this->CI->load->view($footer, $data, TRUE));
+		$this->set('_FOOTER', $this->CI->load->view($footer, $this->data, TRUE));
 
 		$this->CI->benchmark->mark('template_end');
 		
-		return $this->CI->load->view($template, $this->data, $return);
+		return $this->CI->load->view($template, $this->_data, $return);
 	}
 }
 

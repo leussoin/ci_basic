@@ -4,9 +4,9 @@ class Cron extends CI_Controller {
 
 	public function index()
 	{
-        echo '<h1>SUPERVISEUR CRON</h1>';
-        echo 'cmd : ls -al <br>';
-        var_dump( exec( 'ls -al' ) );
+        $cmd = 'bob';
+        $this->template->debug = TRUE;
+        $this->template->load('exemple/cron', array($cmd));
     }
 
     public function message($to = 'World')
