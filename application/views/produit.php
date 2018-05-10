@@ -32,7 +32,7 @@
 
     <div class="form-group">
         <label for="quantite">Quantité :</label>
-        <input type="text" class="form-control"  name="quantite" id="quantite" value="<?php if (!empty($data['aDetailProduit']->qte_prod)) { echo $data['aDetailProduit']->qte_prod; } ?>">
+        <input type="text" class="form-control"  name="quantite" id="quantite" value="<?php if (!empty($data['aDetailProduit']->stock_prod)) { echo $data['aDetailProduit']->stock_prod; } ?>">
     </div>
 
     <div class="form-group">

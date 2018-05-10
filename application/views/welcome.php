@@ -23,7 +23,7 @@
         <tr class="pointer">
             <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->nom_prod ?></td>
             <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->nom_categorie ?></td>
-            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->qte_prod ?></td>
+            <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->stock_prod ?></td>
             <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->nom_mesure ?></td>
             <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php echo $produit->calories ?></td>
             <td class="pointer detail_produit" data-id="<?php echo $produit->id_prod ?>"><?php if ($produit->fk_id_magasin == 1) { echo $produit->prix; } ?></td> 
