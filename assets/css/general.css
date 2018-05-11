@@ -1,15 +1,21 @@
 a:link, a:visited {
-    background-color: skyblue;
-    color: white;
+    color: Black;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     border-radius: 10px 10px 10px 10px;
     font-weight:bold;
+    border-bottom: 6px solid #fff
 }
 
 a:hover {
-    background-color: blue;
+    text-decoration: underline;
+    color: grey;
+    border-bottom: 6px solid #fff
+}
 
+
+#conteneur_navigation {
+    border: black;
 }

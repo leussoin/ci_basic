@@ -49,6 +49,18 @@
         </select>
     </div> 
 
-    <button type="button" class="btn btn-success">Success</button>
+    <div class="container">
+        <div class="row h-100 justify-content-center align-items-center">
+            <?php if (!empty($data['aDetailProduit']->id_prod)) { ?>
+                <button type="button" class="btn btn-success" value="modif" name="modif">Modifier</button>
+            <?php } else { ?>
+                <button type="button" class="btn btn-success" value="creer" name="creer">Creer</button>
+            <?php } ?>
+        </div>
+    </div>
+
+
+
+
 
 </form>

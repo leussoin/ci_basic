@@ -25,7 +25,7 @@ class Recette extends CI_Controller {
 		$this->template->load('recette/detail', $detail);
 	}
 
-	public function update($id)
+	public function update($id = null)
 	{
 		$detail = $this->recette_model->get($id);
 		$this->template->debug = true;
