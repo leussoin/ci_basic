@@ -2,9 +2,6 @@
     Page listing de produits
 </h1>
 
-<a href="index.php/produit/index">Creer un produit</a>
-<a href="index.php/recette">Catégorie</a>
-
 <table id="tableau_produit">
     <thead>
         <tr>

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Produit extends CI_Controller {
 
-	public function index($id)
+	public function index($id = null)
 	{
 		$this->template->js = 'produit';
 		$this->template->css= 'produit';

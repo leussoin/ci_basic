@@ -3,6 +3,6 @@
         <h1>Igor</h1>
     </div>
 
-    <a href="index.php/produit/index">Creer un produit</a>
-    <a href="index.php/recette">Catégorie</a>
+    <a href="produit">Creer un produit</a>
+    <a href="recette">Catégorie</a>
 </header>
