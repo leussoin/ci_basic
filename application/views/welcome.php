@@ -2,20 +2,20 @@
     Page listing de produits
 </h1>
 
-<a href="https://www.w3schools.com">Visit W3Schools</a>
+<a href="index.php/produit/index">Creer un produit</a>
+<a href="index.php/recette">Catégorie</a>
 
 <table id="tableau_produit">
     <thead>
         <tr>
-            <th>Produit</th>
-            <th>Famille</th> 
-            <th>Quantité</th>
-            <th>Mesure</th>
-            <th>Calorie</th>
-            <th>Prix Intermarché</th>
-            <th>Prix LIDL</th>
-            <th>Supprimer</th>
-
+            <th class="pointer">Produit</th>
+            <th class="pointer">Famille</th> 
+            <th class="pointer">Quantité</th>
+            <th class="pointer">Mesure</th>
+            <th class="pointer">Calorie</th>
+            <th class="pointer">Prix Intermarché</th>
+            <th class="pointer">Prix LIDL</th>
+            <th class="pointer">Supprimer</th>
         </tr>
     </thead>
     
