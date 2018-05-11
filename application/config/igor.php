@@ -15,7 +15,7 @@ $config['assets_path'] = 'assets/';
  * GLOBAL
  * Defini le nom des assets commun 
  */
-#$config['global'] = 'general';
+$config['global'] = 'general';
 
 // -- JavaScript -- //
 
